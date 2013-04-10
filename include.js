@@ -36,30 +36,29 @@ function include(requestUrl,throughAjax,headers){
 	Relative to absolute path mapping.
 */
 include.prototype.buildPath=function(URL,resourceUrl){
-								/*
-									First get the current position
-								*/
-								var current_abs=URL.substr(0,URL.lastIndexOf("/")+1);
-								var current_dir_path=URL.substr(URL.indexOf("//")+2+URL.substr(URL.indexOf("//")+2,URL.length).indexOf("/")+1,URL.length);
-								if(resourceUrl.indexOf("../")!=-1){
-									/*
-										Find in the string "../" and map the relative to absolute one.
-									*/
-									while(resourceUrl.indexOf("../")){
-										dirty=resourceUrl.indexOf("../");
-										
+					/*
+						First get the current position
+					*/
+					var current_abs=URL.substr(0,URL.lastIndexOf("/")+1);
+					var current_dir_path=URL.substr(URL.indexOf("//")+2+URL.substr(URL.indexOf("//")+2,URL.length).indexOf("/")+1,URL.length);
+					if(resourceUrl.indexOf("../")!=-1){
+						/*
+						   Find in the string "../" and map the relative to absolute one.
+						*/
+						while(resourceUrl.indexOf("../")){
+							dirty=resourceUrl.indexOf("../");
+						}
+					}else{
+					/*
+						Remove Leading "./"
+						i.e. "./front-end/front.css" => "front-end/front.css"
+					*/
+						if(resourceUrl.indexOf("./")!=-1){
+							resourceUrl=resourceUrl.replace("./","");
 									}
-								}else{
-									/*
-										Remove Leading "./"
-										i.e. "./front-end/front.css" => "front-end/front.css"
-									*/
-									if(resourceUrl.indexOf("./")!=-1){
-										resourceUrl=resourceUrl.replace("./","");
-									}
-								}
-								return current_abs+resourceUrl;
-							}
+						}
+					return current_abs+resourceUrl;
+				}
 include.prototype.init=function(){
 	if(!this.throughAjax){
 		var head=document.getElementsByTagName("head")[0];
